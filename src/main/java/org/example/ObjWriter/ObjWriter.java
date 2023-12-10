@@ -1,5 +1,6 @@
 package org.example.ObjWriter;
 
+import org.example.Math.Vector2f;
 import org.example.Math.Vector3f;
 
 import java.io.FileWriter;
@@ -44,6 +45,26 @@ public class ObjWriter {
         fileWriter.flush();
         fileWriter.close();
     }
+    public void recordTextureVertices(String objFile, ArrayList<Vector2f> textureVertices) throws IOException {
+        FileWriter fileWriter = ObjWriterException.fileCorrectness(objFile);
 
+        for(int i = 0; i < textureVertices.size(); i++) {
+            if(textureVertices.get(i) == null) {
+                try {
+                    int errorLine = i + 1;
+                    throw new ObjWriterException("The element is null.", errorLine);
+                }
+                catch (ObjWriterException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            else {
+                fileWriter.write(OBJ_VERTEX_TOKEN + " " + textureVertices.get(i).getX() + " " + textureVertices.get(i).getY() + "\n");
+            }
+        }
+
+        fileWriter.flush();
+        fileWriter.close();
+    }
 
 }
