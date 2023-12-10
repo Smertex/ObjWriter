@@ -167,35 +167,31 @@ public class ObjWriter {
                 }
             }
             else{
-                if(polygon.getNormalIndices().isEmpty()) {
-                    if (i != polygon.getAmountOfPoints() - 1) {
-                        returnString.append(polygon.getTextureVertexIndices().get(i) + " ");
-                    }
-                    else{
-                        returnString.append(polygon.getTextureVertexIndices().get(i));
-                    }
-                }
-                else{
-                    returnString.append(polygon.getTextureVertexIndices().get(i) + "/");
-                }
+                returnString.append(polygon.getTextureVertexIndices().get(i) + "/");
             }
 
-            if(polygon.getNormalIndices().size() != polygon.getVertexIndices().size()){
+            if(polygon.getNormalIndices().isEmpty()){
+                if(i < polygon.getAmountOfPoints() - 1) {
+                    returnString.append(" ");
+                }
+            }
+            else if(polygon.getNormalIndices().size() != polygon.getVertexIndices().size()){
                 try {
                     throw new ObjWriterException("The number of vertices and normals is not equivalent");
                 }
                 catch (ObjWriterException e) {
                     throw new RuntimeException(e);
-                }
+             }
             }
-            else if(!polygon.getNormalIndices().isEmpty()){
-                if (i != polygon.getAmountOfPoints() - 1) {
+            else{
+                if(i < polygon.getAmountOfPoints() - 1) {
                     returnString.append(polygon.getNormalIndices().get(i) + " ");
                 }
-                else {
+                else{
                     returnString.append(polygon.getNormalIndices().get(i));
                 }
             }
+
 
         }
         return returnString.toString();

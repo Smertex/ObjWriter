@@ -95,7 +95,8 @@ public class ObjWriterTest {
 
         try {
             testObjWriter.recordPolygons("C:/Users/kirat/Desktop/Test.obj", polygons);
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             throw new RuntimeException(e);
         }
 
