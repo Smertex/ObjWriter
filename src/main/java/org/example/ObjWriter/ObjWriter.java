@@ -62,7 +62,6 @@ public class ObjWriter {
                 fileWriter.write(OBJ_VERTEX_TOKEN + " " + textureVertices.get(i).getX() + " " + textureVertices.get(i).getY() + "\n");
             }
         }
-
         fileWriter.flush();
         fileWriter.close();
     }
