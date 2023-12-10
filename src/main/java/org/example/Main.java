@@ -2,10 +2,7 @@ package org.example;
 
 import org.example.Math.Vector3f;
 import org.example.ObjWriter.ObjWriter;
-import org.example.ObjWriter.ObjWriterException;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -19,6 +16,12 @@ public class Main {
 
         try {
             objWriter.recordVertices("C:/Users/kirat/Desktop/Test" + ".obj", vertices);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        try {
+            objWriter.recordComment("C:/Users/kirat/Desktop/Test" + ".obj", "Смээээээээрть");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

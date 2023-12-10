@@ -2,12 +2,12 @@ package org.example.ObjWriter;
 
 import org.example.Math.Vector3f;
 
-import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
 public class ObjWriter {
+    private static final String OBJ_COMMENT_TOKEN = "#";
     private static final String OBJ_VERTEX_TOKEN = "v";
     private static final String OBJ_TEXTURE_TOKEN = "vt";
     private static final String OBJ_NORMAL_TOKEN = "vn";
@@ -15,6 +15,29 @@ public class ObjWriter {
 
     //Записывает информацию из необходимого файла в формат .obj
     public void recordFromAFile(String fileForRecord, String initialFile){
+    }
+
+    public void recordComment(String objFile, String comment) throws IOException {
+        FileWriter fileWriter;
+
+        try {
+            if (objFile.toLowerCase().endsWith(".obj"))
+                fileWriter = new FileWriter(objFile, true);
+            else
+                throw new ObjWriterException("The format of this file is not .obj");
+        }
+        catch (IOException e) {
+            System.err.println("This file not found");
+            throw new RuntimeException(e);
+        }
+        catch (ObjWriterException e) {
+            throw new RuntimeException(e);
+        }
+
+        fileWriter.write(OBJ_COMMENT_TOKEN + comment);
+
+        fileWriter.flush();
+        fileWriter.close();
     }
 
     //Добавление вершин вручную в необходимый файл. В качестве файла принимает ссылку
