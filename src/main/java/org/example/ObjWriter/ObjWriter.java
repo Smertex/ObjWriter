@@ -16,52 +16,22 @@ public class ObjWriter {
     //Записывает информацию из необходимого файла в формат .obj
     public void recordFromAFile(String fileForRecord, String initialFile){
     }
-
     public void recordComment(String objFile, String comment) throws IOException {
-        FileWriter fileWriter;
+        FileWriter fileWriter = ObjWriterException.fileCorrectness(objFile);
 
-        try {
-            if (objFile.toLowerCase().endsWith(".obj"))
-                fileWriter = new FileWriter(objFile, true);
-            else
-                throw new ObjWriterException("The format of this file is not .obj");
-        }
-        catch (IOException e) {
-            System.err.println("This file not found");
-            throw new RuntimeException(e);
-        }
-        catch (ObjWriterException e) {
-            throw new RuntimeException(e);
-        }
-
-        fileWriter.write(OBJ_COMMENT_TOKEN + comment);
-
+        fileWriter.write(OBJ_COMMENT_TOKEN + comment + "\n");
         fileWriter.flush();
         fileWriter.close();
     }
-
     //Добавление вершин вручную в необходимый файл. В качестве файла принимает ссылку
     public void recordVertices(String objFile, ArrayList<Vector3f> vertices) throws IOException {
-        FileWriter fileWriter;
+        FileWriter fileWriter = ObjWriterException.fileCorrectness(objFile);
 
-        try {
-            if (objFile.toLowerCase().endsWith(".obj"))
-                fileWriter = new FileWriter(objFile, true);
-            else
-                throw new ObjWriterException("The format of this file is not .obj");
-        }
-        catch (IOException e) {
-            System.err.println("This file not found");
-            throw new RuntimeException(e);
-        }
-        catch (ObjWriterException e) {
-            throw new RuntimeException(e);
-        }
         for(int i = 0; i < vertices.size(); i++) {
             if(vertices.get(i) == null) {
                 try {
                     int errorLine = i + 1;
-                    throw new ObjWriterException("The element is null in the line:" + " " + errorLine);
+                    throw new ObjWriterException("The element is null.", errorLine);
                 }
                 catch (ObjWriterException e) {
                     throw new RuntimeException(e);

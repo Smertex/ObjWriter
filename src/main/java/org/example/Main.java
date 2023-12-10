@@ -10,6 +10,7 @@ public class Main {
     public static void main(String[] args) {
         ObjWriter objWriter = new ObjWriter();
 
+
         ArrayList<Vector3f> vertices = new ArrayList<>();
         vertices.add(new Vector3f(0.2f, 0.3f, 0.5f));
         vertices.add(new Vector3f(0.3f, 0.4f, 0.6f));
