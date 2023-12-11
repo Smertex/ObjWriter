@@ -2,6 +2,7 @@ package org.example.ObjWriter;
 
 import org.example.Math.Vector2f;
 import org.example.Math.Vector3f;
+import org.example.Model.Model;
 import org.example.Model.Polygon;
 
 import java.io.FileWriter;
@@ -15,7 +16,28 @@ public class ObjWriter {
     private static final String OBJ_NORMAL_TOKEN = "vn";
     private static final String OBJ_FACE_TOKEN = "f";
     //Добавление модели
-    public void recordModel() throws IOException {
+    public void recordModel(String objFile, Model model) {
+        FileWriter fileWriter = ErrorHandled.fileCorrectness(objFile);
+
+        if(model == null) {
+            try {
+                throw new ObjWriterException("Model is null");
+            }
+            catch (ObjWriterException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        else{
+            try {
+                recordVertices(objFile, model.getVertices());
+                recordTextureVertices(objFile, model.getTextureVertices());
+                recordNormals(objFile, model.getNormals());
+                recordPolygons(objFile, model.getPolygons());
+            }
+            catch (IOException e) {
+                throw new RuntimeException("File write error");
+            }
+        }
 
     }
     //Добавление комментария
@@ -80,7 +102,7 @@ public class ObjWriter {
         fileWriter.close();
     }
     //Конструктор строки
-    public String polygonBuilder(Polygon polygon){
+    private String polygonBuilder(Polygon polygon){
         StringBuilder returnString = new StringBuilder(OBJ_FACE_TOKEN + " ");
 
         for(int i = 0; i < polygon.getAmountOfPoints(); i++){

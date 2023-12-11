@@ -8,7 +8,7 @@ import org.example.ObjWriter.ObjWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class ObjWriterTest {
+public class ObjWriterTest{
     //В тестах применяется файл с данным путем: C:/Users/kirat/Desktop/Test.obj
     public static void testFileCorrectness(){
         ObjWriter testObjWriter = new ObjWriter();

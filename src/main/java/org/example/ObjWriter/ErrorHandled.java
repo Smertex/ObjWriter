@@ -3,7 +3,6 @@ package org.example.ObjWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-
 public class ErrorHandled {
     public static FileWriter fileCorrectness(String objFile){
         try {
