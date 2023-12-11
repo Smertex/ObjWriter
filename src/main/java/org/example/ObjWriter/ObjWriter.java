@@ -20,7 +20,7 @@ public class ObjWriter {
     }
     //Добавление комментария
     public void recordComment(String objFile, String comment) throws IOException {
-        FileWriter fileWriter = ObjWriterException.fileCorrectness(objFile);
+        FileWriter fileWriter = ErrorHandled.fileCorrectness(objFile);
 
         fileWriter.write(OBJ_COMMENT_TOKEN + comment + "\n");
         fileWriter.flush();
@@ -28,111 +28,52 @@ public class ObjWriter {
     }
     //Добавление вершин
     public void recordVertices(String objFile, ArrayList<Vector3f> vertices) throws IOException {
-        FileWriter fileWriter = ObjWriterException.fileCorrectness(objFile);
+        FileWriter fileWriter = ErrorHandled.fileCorrectness(objFile);
 
-        if(vertices.isEmpty()){
-            try {
-                throw new ObjWriterException("Array of vertices is empty!");
-            }
-            catch (ObjWriterException e) {
-                throw new RuntimeException(e);
-            }
-        }
+        ErrorHandled.checkingForEmptiness(vertices);
 
         for(int i = 0; i < vertices.size(); i++) {
-            if(vertices.get(i) == null) {
-                try {
-                    int errorLine = i + 1;
-                    throw new ObjWriterException("The element is null.", errorLine);
-                }
-                catch (ObjWriterException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-            else {
-                fileWriter.write(OBJ_VERTEX_TOKEN + " " + vertices.get(i).getX() + " " + vertices.get(i).getY() + " " + vertices.get(i).getZ() + "\n");
-            }
+            ErrorHandled.checkingForNull(vertices, i);
+            fileWriter.write(OBJ_VERTEX_TOKEN + " " + vertices.get(i).getX() + " " + vertices.get(i).getY() + " " + vertices.get(i).getZ() + "\n");
         }
         fileWriter.flush();
         fileWriter.close();
     }
     //Добавление UV
     public void recordTextureVertices(String objFile, ArrayList<Vector2f> textureVertices) throws IOException {
-        FileWriter fileWriter = ObjWriterException.fileCorrectness(objFile);
+        FileWriter fileWriter = ErrorHandled.fileCorrectness(objFile);
 
-        if(textureVertices.isEmpty()){
-            try {
-                throw new ObjWriterException("Array of vertices is empty!");
-            }
-            catch (ObjWriterException e) {
-                throw new RuntimeException(e);
-            }
+        ErrorHandled.checkingForEmptiness(textureVertices);
+
+        for (int i = 0; i < textureVertices.size(); i++) {
+            ErrorHandled.checkingForNull(textureVertices, i);
+            fileWriter.write(OBJ_TEXTURE_TOKEN + " " + textureVertices.get(i).getX() + " " + textureVertices.get(i).getY() + "\n");
         }
 
-        for(int i = 0; i < textureVertices.size(); i++) {
-            if(textureVertices.get(i) == null) {
-                try {
-                    int errorLine = i + 1;
-                    throw new ObjWriterException("The element is null.", errorLine);
-                }
-                catch (ObjWriterException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-            else {
-                fileWriter.write(OBJ_TEXTURE_TOKEN + " " + textureVertices.get(i).getX() + " " + textureVertices.get(i).getY() + "\n");
-            }
-        }
         fileWriter.flush();
         fileWriter.close();
     }
     //Добавление нормали
     public void recordNormals(String objFile, ArrayList<Vector3f> normals) throws IOException {
-        FileWriter fileWriter = ObjWriterException.fileCorrectness(objFile);
+        FileWriter fileWriter = ErrorHandled.fileCorrectness(objFile);
+        ErrorHandled.checkingForEmptiness(normals);
 
-        if(normals.isEmpty()){
-            try {
-                throw new ObjWriterException("Array of vertices is empty!");
-            }
-            catch (ObjWriterException e) {
-                throw new RuntimeException(e);
-            }
+        for (int i = 0; i < normals.size(); i++) {
+            ErrorHandled.checkingForNull(normals, i);
+            fileWriter.write(OBJ_NORMAL_TOKEN + " " + normals.get(i).getX() + " " + normals.get(i).getY() + " " + normals.get(i).getZ() + "\n");
         }
 
-        for(int i = 0; i < normals.size(); i++) {
-            if(normals.get(i) == null) {
-                try {
-                    int errorLine = i + 1;
-                    throw new ObjWriterException("The element is null.", errorLine);
-                }
-                catch (ObjWriterException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-            else {
-                fileWriter.write(OBJ_NORMAL_TOKEN + " " + normals.get(i).getX() + " " + normals.get(i).getY() + " " + normals.get(i).getZ() + "\n");
-            }
-        }
         fileWriter.flush();
         fileWriter.close();
     }
     //Добавление Полигона
     public void recordPolygons(String objFile, ArrayList<Polygon> polygons) throws IOException {
-        FileWriter fileWriter = ObjWriterException.fileCorrectness(objFile);
+        FileWriter fileWriter = ErrorHandled.fileCorrectness(objFile);
+        ErrorHandled.checkingForEmptiness(polygons);
 
-        for(int i = 0; i < polygons.size(); i++){
-            if(polygons.get(i) == null){
-                try {
-                    int errorLine = i + 1;
-                    throw new ObjWriterException("The element is null.", errorLine);
-                }
-                catch (ObjWriterException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-            else{
-                fileWriter.write(polygonBuilder(polygons.get(i)) + "\n");
-            }
+        for (int i = 0; i < polygons.size(); i++) {
+            ErrorHandled.checkingForNull(polygons, i);
+            fileWriter.write(polygonBuilder(polygons.get(i)) + "\n");
         }
 
         fileWriter.flush();
@@ -191,8 +132,6 @@ public class ObjWriter {
                     returnString.append(polygon.getNormalIndices().get(i));
                 }
             }
-
-
         }
         return returnString.toString();
     }
