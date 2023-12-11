@@ -6,7 +6,6 @@ public class Polygon {
     private ArrayList<Integer> vertexIndices;
     private ArrayList<Integer> textureVertexIndices;
     private ArrayList<Integer> normalIndices;
-    private final int amountOfPoints = 3;
     public Polygon() {
         vertexIndices = new ArrayList<Integer>();
         textureVertexIndices = new ArrayList<Integer>();
@@ -29,8 +28,5 @@ public class Polygon {
     }
     public ArrayList<Integer> getNormalIndices() {
         return normalIndices;
-    }
-    public int getAmountOfPoints(){
-        return  amountOfPoints;
     }
 }
