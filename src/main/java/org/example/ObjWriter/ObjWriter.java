@@ -16,7 +16,7 @@ public class ObjWriter {
     private static final String OBJ_NORMAL_TOKEN = "vn";
     private static final String OBJ_FACE_TOKEN = "f";
     //Добавление модели
-    public void recordModel(String objFile, Model model) {
+    protected void recordModel(String objFile, Model model) {
         FileWriter fileWriter = ErrorHandled.fileCorrectness(objFile);
 
         if(model == null) {
@@ -41,7 +41,7 @@ public class ObjWriter {
 
     }
     //Добавление комментария
-    public void recordComment(String objFile, String comment) throws IOException {
+    protected void recordComment(String objFile, String comment) throws IOException {
         FileWriter fileWriter = ErrorHandled.fileCorrectness(objFile);
 
         fileWriter.write(OBJ_COMMENT_TOKEN + comment + "\n");
@@ -49,7 +49,7 @@ public class ObjWriter {
         fileWriter.close();
     }
     //Добавление вершин
-    public void recordVertices(String objFile, ArrayList<Vector3f> vertices) throws IOException {
+    protected void recordVertices(String objFile, ArrayList<Vector3f> vertices) throws IOException {
         FileWriter fileWriter = ErrorHandled.fileCorrectness(objFile);
 
         ErrorHandled.checkingForEmptiness(vertices);
@@ -62,7 +62,7 @@ public class ObjWriter {
         fileWriter.close();
     }
     //Добавление UV
-    public void recordTextureVertices(String objFile, ArrayList<Vector2f> textureVertices) throws IOException {
+    protected void recordTextureVertices(String objFile, ArrayList<Vector2f> textureVertices) throws IOException {
         FileWriter fileWriter = ErrorHandled.fileCorrectness(objFile);
 
         ErrorHandled.checkingForEmptiness(textureVertices);
@@ -76,7 +76,7 @@ public class ObjWriter {
         fileWriter.close();
     }
     //Добавление нормали
-    public void recordNormals(String objFile, ArrayList<Vector3f> normals) throws IOException {
+    protected void recordNormals(String objFile, ArrayList<Vector3f> normals) throws IOException {
         FileWriter fileWriter = ErrorHandled.fileCorrectness(objFile);
         ErrorHandled.checkingForEmptiness(normals);
 
@@ -89,7 +89,7 @@ public class ObjWriter {
         fileWriter.close();
     }
     //Добавление Полигона
-    public void recordPolygons(String objFile, ArrayList<Polygon> polygons) throws IOException {
+    protected void recordPolygons(String objFile, ArrayList<Polygon> polygons) throws IOException {
         FileWriter fileWriter = ErrorHandled.fileCorrectness(objFile);
         ErrorHandled.checkingForEmptiness(polygons);
 
