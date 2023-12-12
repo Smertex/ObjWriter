@@ -207,8 +207,12 @@ public class ObjReader {
             int lineInd) {
         try {
             String[] wordIndices = wordInLine.split("/");
+
+            //todo: БЛОК ЗАПИСЫВАЮЩИЙ ИНФОРМАЦИЮ КРИВО
+
             switch (wordIndices.length) {
                 case 1 -> {
+                    //onePolygonVertexIndices.add(Integer.parseInt(wordIndices[0]));
                     onePolygonVertexIndices.add(Integer.parseInt(wordIndices[0]) - 1);
                 }
                 case 2 -> {
