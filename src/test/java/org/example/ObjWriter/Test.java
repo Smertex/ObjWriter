@@ -8,7 +8,7 @@ public class Test {
         //ObjWriterTest.testRecordTextureVertices();
         //ObjWriterTest.testRecordNormals();
         //ObjWriterTest.testRecordPolygons();
-       ObjWriterTest.testRecordModel();
+        ObjWriterTest.testRecordModel();
 
     }
 }
