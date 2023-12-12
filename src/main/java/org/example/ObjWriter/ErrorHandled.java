@@ -28,16 +28,6 @@ public class ErrorHandled {
             throw new RuntimeException(e);
         }
     }
-    public static void checkingForEmptiness(ArrayList currentList){
-        if(currentList.isEmpty()){
-            try {
-                throw new ObjWriterException("Array of vertices is empty!");
-            }
-            catch (ObjWriterException e) {
-                throw new RuntimeException(e);
-            }
-        }
-    }
     public static void checkingForNull(ArrayList currentList, int i){
         if(currentList.get(i) == null) {
             try {
@@ -49,7 +39,6 @@ public class ErrorHandled {
             }
         }
     }
-
     public static void structurePolygon(Polygon polygon){
         if (polygon.getVertexIndices().size() < 3) {
             try {

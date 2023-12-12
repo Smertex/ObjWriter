@@ -17,7 +17,13 @@ public class ObjWriter {
     private static final String OBJ_FACE_TOKEN = "f";
     //Добавление модели
     protected void recordModel(String objFile, Model model) throws IOException {
+        if(model == null){
+            throw new IllegalArgumentException("Model illegal argument");
+        }
+
         FileWriter fileWriter = ErrorHandled.fileCorrectness(objFile);
+        FileWriter fileClear = new FileWriter(objFile);
+        fileClear.write("");
 
         if (model == null) {
             try {
@@ -25,11 +31,13 @@ public class ObjWriter {
             } catch (ObjWriterException e) {
                 throw new RuntimeException(e);
             }
-        } else {
+        }
+        else {
             recordVertices(objFile, model.getVertices());
             recordTextureVertices(objFile, model.getTextureVertices());
             recordNormals(objFile, model.getNormals());
             recordPolygons(objFile, model.getPolygons());
+
         }
     }
     //Добавление комментария
@@ -44,8 +52,6 @@ public class ObjWriter {
     protected void recordVertices(String objFile, ArrayList<Vector3f> vertices) throws IOException {
         FileWriter fileWriter = ErrorHandled.fileCorrectness(objFile);
 
-        ErrorHandled.checkingForEmptiness(vertices);
-
         for (int i = 0; i < vertices.size(); i++) {
             ErrorHandled.checkingForNull(vertices, i);
             fileWriter.write(OBJ_VERTEX_TOKEN + " " + vertices.get(i).getX() + " " + vertices.get(i).getY() + " " + vertices.get(i).getZ() + "\n");
@@ -56,8 +62,6 @@ public class ObjWriter {
     //Добавление UV
     protected void recordTextureVertices(String objFile, ArrayList<Vector2f> textureVertices) throws IOException {
         FileWriter fileWriter = ErrorHandled.fileCorrectness(objFile);
-
-        ErrorHandled.checkingForEmptiness(textureVertices);
 
         for (int i = 0; i < textureVertices.size(); i++) {
             ErrorHandled.checkingForNull(textureVertices, i);
@@ -70,7 +74,6 @@ public class ObjWriter {
     //Добавление нормали
     protected void recordNormals(String objFile, ArrayList<Vector3f> normals) throws IOException {
         FileWriter fileWriter = ErrorHandled.fileCorrectness(objFile);
-        ErrorHandled.checkingForEmptiness(normals);
 
         for (int i = 0; i < normals.size(); i++) {
             ErrorHandled.checkingForNull(normals, i);
@@ -83,7 +86,6 @@ public class ObjWriter {
     //Добавление Полигона
     protected void recordPolygons(String objFile, ArrayList<Polygon> polygons) throws IOException {
         FileWriter fileWriter = ErrorHandled.fileCorrectness(objFile);
-        ErrorHandled.checkingForEmptiness(polygons);
 
         for (int i = 0; i < polygons.size(); i++) {
             ErrorHandled.checkingForNull(polygons, i);

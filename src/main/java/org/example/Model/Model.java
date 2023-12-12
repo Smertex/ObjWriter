@@ -6,10 +6,10 @@ import org.example.Math.Vector3f;
 import java.util.ArrayList;
 
 public class Model {
-    private ArrayList<Vector3f> vertices = new ArrayList<Vector3f>();
-    private ArrayList<Vector2f> textureVertices = new ArrayList<Vector2f>();
-    private ArrayList<Vector3f> normals = new ArrayList<Vector3f>();
-    private ArrayList<Polygon> polygons = new ArrayList<Polygon>();
+    public ArrayList<Vector3f> vertices = new ArrayList<Vector3f>();
+    public ArrayList<Vector2f> textureVertices = new ArrayList<Vector2f>();
+    public ArrayList<Vector3f> normals = new ArrayList<Vector3f>();
+    public ArrayList<Polygon> polygons = new ArrayList<Polygon>();
     public void setNormals(ArrayList<Vector3f> normals) {
         this.normals = normals;
     }
@@ -34,4 +34,5 @@ public class Model {
     public ArrayList<Polygon> getPolygons() {
         return polygons;
     }
+
 }

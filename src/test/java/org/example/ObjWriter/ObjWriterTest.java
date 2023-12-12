@@ -3,10 +3,14 @@ package org.example.ObjWriter;
 import junit.framework.TestCase;
 import org.example.Math.Vector2f;
 import org.example.Math.Vector3f;
+import org.example.Model.Model;
 import org.example.Model.Polygon;
+import org.example.ObjReader.ObjReader;
 import org.junit.Test;
 
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 
 public class ObjWriterTest extends TestCase {
@@ -124,8 +128,24 @@ public class ObjWriterTest extends TestCase {
     }
     @Test
     public static void testRecordModel() {
+        ObjWriter objWriter = new ObjWriter();
 
+        Path fileName = Path.of("src/3DModelsForTest/Test05.obj");
+        String fileContent;
+        try {
+            fileContent = Files.readString(fileName);
+        }
+        catch (IOException e) {
+            throw new RuntimeException(e);
+        }
 
+        Model model = ObjReader.read(fileContent);
 
+        try {
+            objWriter.recordModel(NAME_FILE, model);
+        }
+        catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
