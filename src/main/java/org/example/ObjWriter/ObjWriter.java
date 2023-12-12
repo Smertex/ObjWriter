@@ -20,7 +20,6 @@ public class ObjWriter {
         if(model == null){
             throw new IllegalArgumentException("Model illegal argument");
         }
-
         FileWriter fileWriter = ErrorHandled.fileCorrectness(objFile);
         FileWriter fileClear = new FileWriter(objFile);
         fileClear.write("");
@@ -28,7 +27,8 @@ public class ObjWriter {
         if (model == null) {
             try {
                 throw new ObjWriterException("Model is null");
-            } catch (ObjWriterException e) {
+            }
+            catch (ObjWriterException e) {
                 throw new RuntimeException(e);
             }
         }
@@ -37,7 +37,6 @@ public class ObjWriter {
             recordTextureVertices(objFile, model.getTextureVertices());
             recordNormals(objFile, model.getNormals());
             recordPolygons(objFile, model.getPolygons());
-
         }
     }
     //Добавление комментария
@@ -79,7 +78,6 @@ public class ObjWriter {
             ErrorHandled.checkingForNull(normals, i);
             fileWriter.write(OBJ_NORMAL_TOKEN + " " + normals.get(i).getX() + " " + normals.get(i).getY() + " " + normals.get(i).getZ() + "\n");
         }
-
         fileWriter.flush();
         fileWriter.close();
     }
@@ -91,7 +89,6 @@ public class ObjWriter {
             ErrorHandled.checkingForNull(polygons, i);
             fileWriter.write(polygonBuilder(polygons.get(i)) + "\n");
         }
-
         fileWriter.flush();
         fileWriter.close();
     }
@@ -114,7 +111,6 @@ public class ObjWriter {
 
                 if (polygon.getTextureVertexIndices().isEmpty()) {
                     returnString.append("/");
-
                 }
                 else {
                     returnString.append("/").append(polygon.getTextureVertexIndices().get(i));

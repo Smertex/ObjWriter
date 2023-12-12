@@ -28,7 +28,7 @@ public class ErrorHandled {
             throw new RuntimeException(e);
         }
     }
-    public static void checkingForNull(ArrayList currentList, int i){
+    public static void checkingForNull(ArrayList<?> currentList, int i){
         if(currentList.get(i) == null) {
             try {
                 int errorLine = i + 1;
