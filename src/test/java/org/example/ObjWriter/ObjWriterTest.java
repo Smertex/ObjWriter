@@ -14,13 +14,13 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 
 public class ObjWriterTest extends TestCase {
-    private static final String NAME_FILE = "Test.obj";
+    private final String NAME_FILE = "Test.obj";
     @Test
-    public static void testСreateFile() {
+    public void testCreateFile() {
         FileWriter fileWriter = ErrorHandled.fileCorrectness(NAME_FILE);
     }
     @Test
-    public static void testRecordNull() {
+    public void testRecordNull() {
         FileWriter fileWriter = ErrorHandled.fileCorrectness(NAME_FILE);
         ObjWriter objWriter = new ObjWriter();
 
@@ -38,7 +38,7 @@ public class ObjWriterTest extends TestCase {
         }
     }
     @Test
-    public static void testRecordComment() {
+    public void testRecordComment() {
         FileWriter fileWriter = ErrorHandled.fileCorrectness(NAME_FILE);
         ObjWriter objWriter = new ObjWriter();
         String message = "Съешь ещё этих мягких французских булок, да выпей же чаю";
@@ -60,7 +60,7 @@ public class ObjWriterTest extends TestCase {
         assertEquals("#" + message, line);
     }
     @Test
-    public static void testRecordVertices() {
+    public void testRecordVertices() {
         FileWriter fileWriter = ErrorHandled.fileCorrectness(NAME_FILE);
         ObjWriter objWriter = new ObjWriter();
         String strokeInfo = "v 0.22 0.33 0.11" + "v 0.22 0.35 0.12" + "v 0.1 0.23 0.14" + "v 0.5 0.11 0.85";
@@ -89,7 +89,7 @@ public class ObjWriterTest extends TestCase {
         assertEquals(strokeInfo, line);
     }
     @Test
-    public static void testRecordTextureVertices() {
+    public void testRecordTextureVertices() {
         FileWriter fileWriter = ErrorHandled.fileCorrectness(NAME_FILE);
         ObjWriter objWriter = new ObjWriter();
         String strokeInfo = "vt 0.33 0.11" + "vt 0.35 0.12" + "vt 0.23 0.14" + "vt 0.11 0.85";
@@ -118,7 +118,7 @@ public class ObjWriterTest extends TestCase {
         assertEquals(strokeInfo, line);
     }
     @Test
-    public static void testRecordNormals() {
+    public void testRecordNormals() {
         FileWriter fileWriter = ErrorHandled.fileCorrectness(NAME_FILE);
         ObjWriter objWriter = new ObjWriter();
         ArrayList<Vector3f> normals = new ArrayList<>();
@@ -147,7 +147,7 @@ public class ObjWriterTest extends TestCase {
         assertEquals(strokeInfo, line);
     }
     @Test
-    public static void testRecordPolygons() {
+    public void testRecordPolygons() {
         FileWriter fileWriter = ErrorHandled.fileCorrectness(NAME_FILE);
         ObjWriter objWriter = new ObjWriter();
         ArrayList<Polygon> polygons = new ArrayList<>();
@@ -193,10 +193,10 @@ public class ObjWriterTest extends TestCase {
 
         assertEquals(strokeInfo, line);
     }
-    public static void testRecordPolygonsWithoutUV() {
+    public void testRecordPolygonsWithoutUV() {
         FileWriter fileWriter = ErrorHandled.fileCorrectness(NAME_FILE);
-        ObjWriter objWriter = new ObjWriter();
         ArrayList<Polygon> polygons = new ArrayList<>();
+        ObjWriter objWriter = new ObjWriter();
         String strokeInfo = "f 1//9 2//10 3//11 4//12";
         String line = "";
 
@@ -232,7 +232,7 @@ public class ObjWriterTest extends TestCase {
 
         assertEquals(strokeInfo, line);
     }
-    public static void testRecordPolygonsWithoutNormals() {
+    public void testRecordPolygonsWithoutNormals() {
         FileWriter fileWriter = ErrorHandled.fileCorrectness(NAME_FILE);
         ObjWriter objWriter = new ObjWriter();
         ArrayList<Polygon> polygons = new ArrayList<>();
@@ -272,9 +272,8 @@ public class ObjWriterTest extends TestCase {
         assertEquals(strokeInfo, line);
     }
     @Test
-    public static void testRecordModel() {
+    public void testRecordModel() {
         ObjWriter objWriter = new ObjWriter();
-
         Path fileName = Path.of("src/3DModelsForTest/Test05.obj");
         String fileContent;
         try {
