@@ -4,11 +4,12 @@ public class Test {
     public static void main(String[] args) {
 
         //ObjWriterTest.testRecordComment();
-
-        ObjWriterTest.testRecordVertices();
+        //ObjWriterTest.testRecordVertices();
         //ObjWriterTest.testRecordTextureVertices();
         //ObjWriterTest.testRecordNormals();
         //ObjWriterTest.testRecordPolygons();
+        //ObjWriterTest.testRecordPolygonsWithoutUV();
+        //ObjWriterTest.testRecordPolygonsWithoutNormals();
         //ObjWriterTest.testRecordModel();
 
     }

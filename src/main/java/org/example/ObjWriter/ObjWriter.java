@@ -41,7 +41,6 @@ public class ObjWriter {
     protected void recordComment(FileWriter fileWriter, String comment) throws IOException {
         fileWriter.write(OBJ_COMMENT_TOKEN + comment + "\n");
         fileWriter.flush();
-        fileWriter.close();
     }
 
     //Добавление вершин
@@ -51,7 +50,6 @@ public class ObjWriter {
             fileWriter.write(OBJ_VERTEX_TOKEN + " " + vertices.get(i).getX() + " " + vertices.get(i).getY() + " " + vertices.get(i).getZ() + "\n");
         }
         fileWriter.flush();
-        fileWriter.close();
     }
 
     //Добавление UV
@@ -61,7 +59,6 @@ public class ObjWriter {
             fileWriter.write(OBJ_TEXTURE_TOKEN + " " + textureVertices.get(i).getX() + " " + textureVertices.get(i).getY() + "\n");
         }
         fileWriter.flush();
-        fileWriter.close();
     }
 
     //Добавление нормали
@@ -71,7 +68,6 @@ public class ObjWriter {
             fileWriter.write(OBJ_NORMAL_TOKEN + " " + normals.get(i).getX() + " " + normals.get(i).getY() + " " + normals.get(i).getZ() + "\n");
         }
         fileWriter.flush();
-        fileWriter.close();
     }
 
     //Добавление Полигона
@@ -81,7 +77,6 @@ public class ObjWriter {
             fileWriter.write(polygonBuilder(polygons.get(i)) + "\n");
         }
         fileWriter.flush();
-        fileWriter.close();
     }
 
     //Конструктор строки
