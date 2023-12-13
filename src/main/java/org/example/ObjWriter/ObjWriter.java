@@ -22,8 +22,6 @@ public class ObjWriter {
             throw new IllegalArgumentException("Model illegal argument");
         }
         FileWriter fileWriter = ErrorHandled.fileCorrectness(objFile);
-        FileWriter fileClear = new FileWriter(objFile);
-        fileClear.write("");
 
         if (model == null) {
             try {
@@ -32,26 +30,22 @@ public class ObjWriter {
                 throw new RuntimeException(e);
             }
         } else {
-            recordVertices(objFile, model.getVertices());
-            recordTextureVertices(objFile, model.getTextureVertices());
-            recordNormals(objFile, model.getNormals());
-            recordPolygons(objFile, model.getPolygons());
+            recordVertices(fileWriter, model.getVertices());
+            recordTextureVertices(fileWriter, model.getTextureVertices());
+            recordNormals(fileWriter, model.getNormals());
+            recordPolygons(fileWriter, model.getPolygons());
         }
     }
 
     //Добавление комментария
-    protected void recordComment(String objFile, String comment) throws IOException {
-        FileWriter fileWriter = ErrorHandled.fileCorrectness(objFile);
-
+    protected void recordComment(FileWriter fileWriter, String comment) throws IOException {
         fileWriter.write(OBJ_COMMENT_TOKEN + comment + "\n");
         fileWriter.flush();
         fileWriter.close();
     }
 
     //Добавление вершин
-    protected void recordVertices(String objFile, ArrayList<Vector3f> vertices) throws IOException {
-        FileWriter fileWriter = ErrorHandled.fileCorrectness(objFile);
-
+    protected void recordVertices(FileWriter fileWriter, ArrayList<Vector3f> vertices) throws IOException {
         for (int i = 0; i < vertices.size(); i++) {
             ErrorHandled.checkingForNull(vertices, i);
             fileWriter.write(OBJ_VERTEX_TOKEN + " " + vertices.get(i).getX() + " " + vertices.get(i).getY() + " " + vertices.get(i).getZ() + "\n");
@@ -61,9 +55,7 @@ public class ObjWriter {
     }
 
     //Добавление UV
-    protected void recordTextureVertices(String objFile, ArrayList<Vector2f> textureVertices) throws IOException {
-        FileWriter fileWriter = ErrorHandled.fileCorrectness(objFile);
-
+    protected void recordTextureVertices(FileWriter fileWriter, ArrayList<Vector2f> textureVertices) throws IOException {
         for (int i = 0; i < textureVertices.size(); i++) {
             ErrorHandled.checkingForNull(textureVertices, i);
             fileWriter.write(OBJ_TEXTURE_TOKEN + " " + textureVertices.get(i).getX() + " " + textureVertices.get(i).getY() + "\n");
@@ -73,9 +65,7 @@ public class ObjWriter {
     }
 
     //Добавление нормали
-    protected void recordNormals(String objFile, ArrayList<Vector3f> normals) throws IOException {
-        FileWriter fileWriter = ErrorHandled.fileCorrectness(objFile);
-
+    protected void recordNormals(FileWriter fileWriter, ArrayList<Vector3f> normals) throws IOException {
         for (int i = 0; i < normals.size(); i++) {
             ErrorHandled.checkingForNull(normals, i);
             fileWriter.write(OBJ_NORMAL_TOKEN + " " + normals.get(i).getX() + " " + normals.get(i).getY() + " " + normals.get(i).getZ() + "\n");
@@ -85,9 +75,7 @@ public class ObjWriter {
     }
 
     //Добавление Полигона
-    protected void recordPolygons(String objFile, ArrayList<Polygon> polygons) throws IOException {
-        FileWriter fileWriter = ErrorHandled.fileCorrectness(objFile);
-
+    protected void recordPolygons(FileWriter fileWriter, ArrayList<Polygon> polygons) throws IOException {
         for (int i = 0; i < polygons.size(); i++) {
             ErrorHandled.checkingForNull(polygons, i);
             fileWriter.write(polygonBuilder(polygons.get(i)) + "\n");
@@ -100,51 +88,42 @@ public class ObjWriter {
     private String polygonBuilder(Polygon polygon) {
         StringBuilder returnString = new StringBuilder(OBJ_FACE_TOKEN + " ");
         ErrorHandled.structurePolygon(polygon);
-
+        int  vertexIndices = polygon.getVertexIndices().size();
 
         if (polygon.getTextureVertexIndices().isEmpty() && polygon.getNormalIndices().isEmpty()) {
-            for (int i = 0; i < polygon.getVertexIndices().size(); i++) {
-                if (i < polygon.getVertexIndices().size() - 1) {
-                    returnString.append(polygon.getVertexIndices().get(i)).append(" ");
-                }
-                else {
-                    returnString.append(polygon.getVertexIndices().get(i));
+            for (int i = 0; i < vertexIndices; i++) {
+                returnString.append(polygon.getVertexIndices().get(i));
+                if (i < vertexIndices - 1) {
+                    returnString.append(" ");
                 }
             }
         }
         else if (polygon.getTextureVertexIndices().isEmpty()) {
-            for (int i = 0; i < polygon.getVertexIndices().size(); i++) {
+            for (int i = 0; i < vertexIndices; i++) {
                 returnString.append(polygon.getVertexIndices().get(i));
                 returnString.append("/");
-
-                if (i < polygon.getVertexIndices().size() - 1) {
-                    returnString.append("/").append(polygon.getNormalIndices().get(i)).append(" ");
-                }
-                else {
-                    returnString.append("/").append(polygon.getNormalIndices().get(i));
+                returnString.append("/").append(polygon.getNormalIndices().get(i));
+                if (i < vertexIndices - 1) {
+                    returnString.append(" ");
                 }
             }
         }
         else if (polygon.getNormalIndices().isEmpty()) {
-            for (int i = 0; i < polygon.getVertexIndices().size(); i++) {
+            for (int i = 0; i < vertexIndices; i++) {
                 returnString.append(polygon.getVertexIndices().get(i));
                 returnString.append("/").append(polygon.getTextureVertexIndices().get(i));
-
-                if (i < polygon.getVertexIndices().size() - 1) {
+                if (i < vertexIndices - 1) {
                     returnString.append(" ");
                 }
             }
         }
         else {
-            for (int i = 0; i < polygon.getVertexIndices().size(); i++) {
+            for (int i = 0; i < vertexIndices; i++) {
                 returnString.append(polygon.getVertexIndices().get(i));
                 returnString.append("/").append(polygon.getTextureVertexIndices().get(i));
-
-                if (i < polygon.getVertexIndices().size() - 1) {
-                    returnString.append("/").append(polygon.getNormalIndices().get(i)).append(" ");
-                }
-                else {
-                    returnString.append("/").append(polygon.getNormalIndices().get(i));
+                returnString.append("/").append(polygon.getNormalIndices().get(i));
+                if (i < vertexIndices - 1) {
+                    returnString.append(" ");
                 }
 
             }

@@ -8,52 +8,87 @@ import org.example.Model.Polygon;
 import org.example.ObjReader.ObjReader;
 import org.junit.Test;
 
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 
 public class ObjWriterTest extends TestCase {
-    private static final String NAME_FILE = "C:/Users/kirat/Desktop/Test.obj";
-    private static final String NAME_FILE_FOR_ERROR = "C:/Users/kirat/Desktop/Test.txt";
-    private static final String NAME_FILE_CREATE = "Object.obj";
-    private static final String NAME_FILE_CREATE_FOR_ERROR = "Object.txt";
+    private static final String NAME_FILE = "Test.obj";
+    @Test
+    public static void testСreateFile() {
+        FileWriter fileWriter = ErrorHandled.fileCorrectness(NAME_FILE);
+    }
+    @Test
+    public static void testRecordNull() {
+        FileWriter fileWriter = ErrorHandled.fileCorrectness(NAME_FILE);
+        ObjWriter objWriter = new ObjWriter();
+
+        ArrayList<Vector3f> vertices = new ArrayList<>();
+        vertices.add(new Vector3f(0.22f, 0.33f, 0.11f));
+        vertices.add(new Vector3f(0.22f, 0.35f, 0.12f));
+        vertices.add(null);
+        vertices.add(new Vector3f(0.1f, 0.23f, 0.14f));
+        vertices.add(new Vector3f(0.50f, 0.11f, 0.85f));
+
+        try {
+            objWriter.recordVertices(fileWriter, vertices);
+        }
+        catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
     @Test
     public static void testRecordComment() {
+        FileWriter fileWriter = ErrorHandled.fileCorrectness(NAME_FILE);
         ObjWriter objWriter = new ObjWriter();
+        String message = "Съешь ещё этих мягких французских булок, да выпей же чаю";
+        String line;
+
         try {
-              objWriter.recordComment(NAME_FILE, "Съешь ещё этих мягких французских булок, да выпей же чаю");
-//            objWriter.recordComment(NAME_FILE_FOR_ERROR, "Съешь ещё этих мягких французских булок, да выпей же чаю");
-//            objWriter.recordComment(NAME_FILE_CREATE, "Съешь ещё этих мягких французских булок, да выпей же чаю");
-//            objWriter.recordComment(NAME_FILE_CREATE_FOR_ERROR, "Съешь ещё этих мягких французских булок, да выпей же чаю");
+            objWriter.recordComment(fileWriter, message);
+            BufferedReader reader = new BufferedReader(new FileReader(NAME_FILE));
+            line = reader.readLine();
+            reader.close();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
 
+        assertEquals("#" + message, line);
     }
     @Test
     public static void testRecordVertices() {
+        FileWriter fileWriter = ErrorHandled.fileCorrectness(NAME_FILE);
         ObjWriter objWriter = new ObjWriter();
-        ArrayList<Vector3f> vertices = new ArrayList<>();
+        String strokeInfo = "v 0.22 0.33 0.11" + "v 0.22 0.35 0.12" + "v 0.1 0.23 0.14" + "v 0.5 0.11 0.85";
+        String line = "";
 
-        //vertices.add(null);
+        ArrayList<Vector3f> vertices = new ArrayList<>();
         vertices.add(new Vector3f(0.22f, 0.33f, 0.11f));
         vertices.add(new Vector3f(0.22f, 0.35f, 0.12f));
-        //vertices.add(null);
         vertices.add(new Vector3f(0.1f, 0.23f, 0.14f));
         vertices.add(new Vector3f(0.50f, 0.11f, 0.85f));
-        //vertices.add(null);
 
         try {
-            objWriter.recordVertices(NAME_FILE, vertices);
+            objWriter.recordVertices(fileWriter, vertices);
+            BufferedReader reader = new BufferedReader(new FileReader(NAME_FILE));
+            BufferedReader readerNull = new BufferedReader(new FileReader(NAME_FILE));
+
+            while(readerNull.readLine() != null){
+                line += reader.readLine();
+            }
+            reader.close();
+            readerNull.close();
         }
         catch (IOException e) {
             throw new RuntimeException(e);
         }
 
+        assertEquals(strokeInfo, line);
     }
     @Test
     public static void testRecordTextureVertices() {
+        FileWriter fileWriter = ErrorHandled.fileCorrectness(NAME_FILE);
         ObjWriter objWriter = new ObjWriter();
 
         ArrayList<Vector2f> textureVertices = new ArrayList<>();
@@ -64,7 +99,7 @@ public class ObjWriterTest extends TestCase {
         textureVertices.add(new Vector2f( 0.11f, 0.85f));
 
         try {
-            objWriter.recordTextureVertices(NAME_FILE, textureVertices);
+            objWriter.recordTextureVertices(fileWriter, textureVertices);
         }
         catch (IOException e) {
             throw new RuntimeException(e);
@@ -73,6 +108,7 @@ public class ObjWriterTest extends TestCase {
     }
     @Test
     public static void testRecordNormals() {
+        FileWriter fileWriter = ErrorHandled.fileCorrectness(NAME_FILE);
         ObjWriter objWriter = new ObjWriter();
         ArrayList<Vector3f> normals = new ArrayList<>();
 
@@ -82,7 +118,7 @@ public class ObjWriterTest extends TestCase {
         normals.add(new Vector3f(0.11f, 0.12f, 0.13f));
 
         try {
-            objWriter.recordNormals(NAME_FILE, normals);
+            objWriter.recordNormals(fileWriter, normals);
         }
         catch (IOException e) {
             throw new RuntimeException(e);
@@ -91,6 +127,7 @@ public class ObjWriterTest extends TestCase {
     }
     @Test
     public static void testRecordPolygons() {
+        FileWriter fileWriter = ErrorHandled.fileCorrectness(NAME_FILE);
         ObjWriter objWriter = new ObjWriter();
         ArrayList<Polygon> polygons = new ArrayList<>();
 
@@ -119,7 +156,7 @@ public class ObjWriterTest extends TestCase {
 
 
         try {
-            objWriter.recordPolygons(NAME_FILE, polygons);
+            objWriter.recordPolygons(fileWriter, polygons);
         }
         catch (IOException e) {
             throw new RuntimeException(e);
