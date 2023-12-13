@@ -212,8 +212,8 @@ public class ObjReader {
 
             switch (wordIndices.length) {
                 case 1 -> {
-                    //onePolygonVertexIndices.add(Integer.parseInt(wordIndices[0]));
-                    onePolygonVertexIndices.add(Integer.parseInt(wordIndices[0]) - 1);
+                    onePolygonVertexIndices.add(Integer.parseInt(wordIndices[0]));
+                    //onePolygonVertexIndices.add(Integer.parseInt(wordIndices[0]) - 1);
                 }
                 case 2 -> {
                     onePolygonVertexIndices.add(Integer.parseInt(wordIndices[0]) - 1);

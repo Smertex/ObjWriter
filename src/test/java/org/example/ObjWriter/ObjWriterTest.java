@@ -274,20 +274,20 @@ public class ObjWriterTest extends TestCase {
     @Test
     public void testRecordModel() {
         ObjWriter objWriter = new ObjWriter();
-        Path fileName = Path.of("src/3DModelsForTest/Test05.obj");
+        Path fileName = Path.of("3DModelsForTest/Test05.obj");
+        String stokeInfoWrite = "";
+        String stokeInfoRead = "";
+
         String fileContent;
         try {
             fileContent = Files.readString(fileName);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
-        Model model = ObjReader.read(fileContent);
-
-        try {
+            Model model = ObjReader.read(fileContent);
             objWriter.recordModel(NAME_FILE, model);
+
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+
+
     }
 }
