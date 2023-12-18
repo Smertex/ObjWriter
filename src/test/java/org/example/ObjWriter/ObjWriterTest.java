@@ -46,22 +46,21 @@ public class ObjWriterTest extends TestCase {
         FileWriter fileWriter = ErrorHandled.fileCorrectness(NAME_FILE);
         ObjWriter objWriter = new ObjWriter();
         String message = "Съешь ещё этих мягких французских булок, да выпей же чаю";
-        String line = "";
+        StringBuilder line = new StringBuilder();
 
         try {
             objWriter.recordComment(fileWriter, message);
             BufferedReader reader = new BufferedReader(new FileReader(NAME_FILE));
             BufferedReader readerNull = new BufferedReader(new FileReader(NAME_FILE));
             while (readerNull.readLine() != null) {
-                line += reader.readLine();
+                line.append(reader.readLine());
             }
             reader.close();
             readerNull.close();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
-        assertEquals("#" + message, line);
+        assertEquals("#" + message, line.toString());
     }
 
     @Test
@@ -90,7 +89,6 @@ public class ObjWriterTest extends TestCase {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
         assertEquals(strokeInfo, line);
     }
 
@@ -99,7 +97,7 @@ public class ObjWriterTest extends TestCase {
         FileWriter fileWriter = ErrorHandled.fileCorrectness(NAME_FILE);
         ObjWriter objWriter = new ObjWriter();
         String strokeInfo = "vt 0.33 0.11" + "vt 0.35 0.12" + "vt 0.23 0.14" + "vt 0.11 0.85";
-        String line = "";
+        StringBuilder line = new StringBuilder();
 
         ArrayList<Vector2f> textureVertices = new ArrayList<>();
         textureVertices.add(new Vector2f(0.33f, 0.11f));
@@ -113,15 +111,14 @@ public class ObjWriterTest extends TestCase {
             BufferedReader readerNull = new BufferedReader(new FileReader(NAME_FILE));
 
             while (readerNull.readLine() != null) {
-                line += reader.readLine();
+                line.append(reader.readLine());
             }
             reader.close();
             readerNull.close();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
-        assertEquals(strokeInfo, line);
+        assertEquals(strokeInfo, line.toString());
     }
 
     @Test
@@ -130,7 +127,7 @@ public class ObjWriterTest extends TestCase {
         ObjWriter objWriter = new ObjWriter();
         ArrayList<Vector3f> normals = new ArrayList<>();
         String strokeInfo = "vn 0.1 0.2 0.3" + "vn 0.4 0.5 0.6" + "vn 0.7 0.8 0.9" + "vn 0.11 0.12 0.13";
-        String line = "";
+        StringBuilder line = new StringBuilder();
 
         normals.add(new Vector3f(0.1f, 0.2f, 0.3f));
         normals.add(new Vector3f(0.4f, 0.5f, 0.6f));
@@ -143,7 +140,7 @@ public class ObjWriterTest extends TestCase {
             BufferedReader readerNull = new BufferedReader(new FileReader(NAME_FILE));
 
             while (readerNull.readLine() != null) {
-                line += reader.readLine();
+                line.append(reader.readLine());
             }
 
             reader.close();
@@ -151,8 +148,7 @@ public class ObjWriterTest extends TestCase {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
-        assertEquals(strokeInfo, line);
+        assertEquals(strokeInfo, line.toString());
     }
 
     @Test
@@ -161,7 +157,7 @@ public class ObjWriterTest extends TestCase {
         ObjWriter objWriter = new ObjWriter();
         ArrayList<Polygon> polygons = new ArrayList<>();
         String strokeInfo = "f 1/5/9 2/6/10 3/7/11 4/8/12";
-        String line = "";
+        StringBuilder line = new StringBuilder();
 
         ArrayList<Integer> vertexIndices = new ArrayList<>();
         vertexIndices.add(1);
@@ -192,15 +188,14 @@ public class ObjWriterTest extends TestCase {
             BufferedReader readerNull = new BufferedReader(new FileReader(NAME_FILE));
 
             while (readerNull.readLine() != null) {
-                line += reader.readLine();
+                line.append(reader.readLine());
             }
             reader.close();
             readerNull.close();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
-        assertEquals(strokeInfo, line);
+        assertEquals(strokeInfo, line.toString());
     }
 
     public void testRecordPolygonsWithoutUV() {
@@ -208,7 +203,7 @@ public class ObjWriterTest extends TestCase {
         ArrayList<Polygon> polygons = new ArrayList<>();
         ObjWriter objWriter = new ObjWriter();
         String strokeInfo = "f 1//9 2//10 3//11 4//12";
-        String line = "";
+        StringBuilder line = new StringBuilder();
 
         ArrayList<Integer> vertexIndices = new ArrayList<>();
         vertexIndices.add(1);
@@ -232,15 +227,14 @@ public class ObjWriterTest extends TestCase {
             BufferedReader readerNull = new BufferedReader(new FileReader(NAME_FILE));
 
             while (readerNull.readLine() != null) {
-                line += reader.readLine();
+                line.append(reader.readLine());
             }
             reader.close();
             readerNull.close();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
-        assertEquals(strokeInfo, line);
+        assertEquals(strokeInfo, line.toString());
     }
 
     public void testRecordPolygonsWithoutNormals() {
@@ -248,7 +242,7 @@ public class ObjWriterTest extends TestCase {
         ObjWriter objWriter = new ObjWriter();
         ArrayList<Polygon> polygons = new ArrayList<>();
         String strokeInfo = "f 1/5 2/6 3/7 4/8";
-        String line = "";
+        StringBuilder line = new StringBuilder();
 
         ArrayList<Integer> vertexIndices = new ArrayList<>();
         vertexIndices.add(1);
@@ -272,15 +266,14 @@ public class ObjWriterTest extends TestCase {
             BufferedReader readerNull = new BufferedReader(new FileReader(NAME_FILE));
 
             while (readerNull.readLine() != null) {
-                line += reader.readLine();
+                line.append(reader.readLine());
             }
             reader.close();
             readerNull.close();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
-        assertEquals(strokeInfo, line);
+        assertEquals(strokeInfo, line.toString());
     }
 
     @Test
@@ -288,7 +281,6 @@ public class ObjWriterTest extends TestCase {
         ObjWriter objWriter = new ObjWriter();
         Path fileName1 = Path.of("3DModelsForTest/Test05.obj");
         Path fileName2 = Path.of(NAME_FILE);
-
 
         String fileContent;
         try {
@@ -300,12 +292,8 @@ public class ObjWriterTest extends TestCase {
             Model model2 = ObjReader.read(fileContent);
 
             Assert.assertEquals(model1, model2);
-
-
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
-
     }
 }
