@@ -1,6 +1,7 @@
 package org.example.Model;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class Polygon {
     private ArrayList<Integer> vertexIndices;
@@ -28,5 +29,18 @@ public class Polygon {
     }
     public ArrayList<Integer> getNormalIndices() {
         return normalIndices;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Polygon polygon = (Polygon) o;
+        return Objects.equals(vertexIndices, polygon.vertexIndices) && Objects.equals(textureVertexIndices, polygon.textureVertexIndices) && Objects.equals(normalIndices, polygon.normalIndices);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(vertexIndices, textureVertexIndices, normalIndices);
     }
 }

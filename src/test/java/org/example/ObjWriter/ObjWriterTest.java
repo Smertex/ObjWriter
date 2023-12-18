@@ -6,6 +6,7 @@ import org.example.Math.Vector3f;
 import org.example.Model.Model;
 import org.example.Model.Polygon;
 import org.example.ObjReader.ObjReader;
+import org.junit.Assert;
 import org.junit.Test;
 
 import java.io.*;
@@ -298,7 +299,7 @@ public class ObjWriterTest extends TestCase {
             fileContent = Files.readString(fileName2);
             Model model2 = ObjReader.read(fileContent);
 
-            assert(model1.equals(model2));
+            Assert.assertEquals(model1, model2);
 
 
         } catch (IOException e) {
