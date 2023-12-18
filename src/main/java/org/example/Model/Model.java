@@ -4,6 +4,7 @@ import org.example.Math.Vector2f;
 import org.example.Math.Vector3f;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class Model {
     public ArrayList<Vector3f> vertices = new ArrayList<Vector3f>();
@@ -34,5 +35,16 @@ public class Model {
     public ArrayList<Polygon> getPolygons() {
         return polygons;
     }
+    @Override
+    public boolean equals(Object obj) {
+        if(this == obj) {
+            return true;
+        }
+        if(obj == null || getClass() != obj.getClass()){
+            return false;
+        }
+        Model model = (Model) obj;
+        return Objects.equals(vertices, model.vertices) && Objects.equals(textureVertices, model.textureVertices) && Objects.equals(normals, model.normals) && Objects.equals(polygons, model.polygons);
 
+    }
 }

@@ -15,10 +15,12 @@ import java.util.ArrayList;
 
 public class ObjWriterTest extends TestCase {
     private final String NAME_FILE = "Test.obj";
+
     @Test
     public void testCreateFile() {
         FileWriter fileWriter = ErrorHandled.fileCorrectness(NAME_FILE);
     }
+
     @Test
     public void testRecordNull() {
         FileWriter fileWriter = ErrorHandled.fileCorrectness(NAME_FILE);
@@ -37,6 +39,7 @@ public class ObjWriterTest extends TestCase {
             throw new RuntimeException(e);
         }
     }
+
     @Test
     public void testRecordComment() {
         FileWriter fileWriter = ErrorHandled.fileCorrectness(NAME_FILE);
@@ -59,6 +62,7 @@ public class ObjWriterTest extends TestCase {
 
         assertEquals("#" + message, line);
     }
+
     @Test
     public void testRecordVertices() {
         FileWriter fileWriter = ErrorHandled.fileCorrectness(NAME_FILE);
@@ -88,6 +92,7 @@ public class ObjWriterTest extends TestCase {
 
         assertEquals(strokeInfo, line);
     }
+
     @Test
     public void testRecordTextureVertices() {
         FileWriter fileWriter = ErrorHandled.fileCorrectness(NAME_FILE);
@@ -117,6 +122,7 @@ public class ObjWriterTest extends TestCase {
 
         assertEquals(strokeInfo, line);
     }
+
     @Test
     public void testRecordNormals() {
         FileWriter fileWriter = ErrorHandled.fileCorrectness(NAME_FILE);
@@ -138,6 +144,7 @@ public class ObjWriterTest extends TestCase {
             while (readerNull.readLine() != null) {
                 line += reader.readLine();
             }
+
             reader.close();
             readerNull.close();
         } catch (IOException e) {
@@ -146,6 +153,7 @@ public class ObjWriterTest extends TestCase {
 
         assertEquals(strokeInfo, line);
     }
+
     @Test
     public void testRecordPolygons() {
         FileWriter fileWriter = ErrorHandled.fileCorrectness(NAME_FILE);
@@ -193,6 +201,7 @@ public class ObjWriterTest extends TestCase {
 
         assertEquals(strokeInfo, line);
     }
+
     public void testRecordPolygonsWithoutUV() {
         FileWriter fileWriter = ErrorHandled.fileCorrectness(NAME_FILE);
         ArrayList<Polygon> polygons = new ArrayList<>();
@@ -232,6 +241,7 @@ public class ObjWriterTest extends TestCase {
 
         assertEquals(strokeInfo, line);
     }
+
     public void testRecordPolygonsWithoutNormals() {
         FileWriter fileWriter = ErrorHandled.fileCorrectness(NAME_FILE);
         ObjWriter objWriter = new ObjWriter();
@@ -271,18 +281,25 @@ public class ObjWriterTest extends TestCase {
 
         assertEquals(strokeInfo, line);
     }
+
     @Test
     public void testRecordModel() {
         ObjWriter objWriter = new ObjWriter();
-        Path fileName = Path.of("3DModelsForTest/Test05.obj");
-        String stokeInfoWrite = "";
-        String stokeInfoRead = "";
+        Path fileName1 = Path.of("3DModelsForTest/Test05.obj");
+        Path fileName2 = Path.of(NAME_FILE);
+
 
         String fileContent;
         try {
-            fileContent = Files.readString(fileName);
-            Model model = ObjReader.read(fileContent);
-            objWriter.recordModel(NAME_FILE, model);
+            fileContent = Files.readString(fileName1);
+            Model model1 = ObjReader.read(fileContent);
+            objWriter.recordModel(NAME_FILE, model1);
+
+            fileContent = Files.readString(fileName2);
+            Model model2 = ObjReader.read(fileContent);
+
+            assert(model1.equals(model2));
+
 
         } catch (IOException e) {
             throw new RuntimeException(e);

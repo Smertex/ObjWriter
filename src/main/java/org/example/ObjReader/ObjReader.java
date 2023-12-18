@@ -77,7 +77,6 @@ public class ObjReader {
                                     vertexIndicesSize));
                 }
             }
-
             // проверка для нормалей
             if (list.getNormalIndices().size() != 0) {
                 for (int i = 0; i < 3; i++) {
@@ -95,7 +94,6 @@ public class ObjReader {
                     }
                 }
             }
-
             // проверка для текстурных вершин
             if (list.getTextureVertexIndices().size() != 0) {
                 for (int i = 0; i < 3; i++) {
