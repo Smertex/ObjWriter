@@ -8,6 +8,7 @@ import org.example.Model.Polygon;
 import org.example.ObjReader.ObjReader;
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.function.ThrowingRunnable;
 
 import java.io.*;
 import java.nio.file.Files;
@@ -34,11 +35,12 @@ public class ObjWriterTest extends TestCase {
         vertices.add(new Vector3f(0.1f, 0.23f, 0.14f));
         vertices.add(new Vector3f(0.50f, 0.11f, 0.85f));
 
-        try {
-            objWriter.recordVertices(fileWriter, vertices);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        Assert.assertThrows(ObjWriterException.class, new ThrowingRunnable() {
+            @Override
+            public void run() throws Throwable {
+                objWriter.recordVertices(fileWriter, vertices);
+            }
+        });
     }
 
     @Test

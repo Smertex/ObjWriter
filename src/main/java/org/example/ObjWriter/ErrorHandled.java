@@ -20,38 +20,32 @@ public class ErrorHandled {
             }
         }
     }
+
     public static void checkingForNull(ArrayList<?> currentList, int i) {
         if (currentList.get(i) == null) {
-            try {
                 int errorLine = i + 1;
                 throw new ObjWriterException("The element is null.", errorLine);
-            } catch (ObjWriterException e) {
-                System.err.println(e.getMessage());
-                System.exit(0);
-            }
         }
     }
+
     public static void structurePolygon(Polygon polygon) {
         if (polygon.getVertexIndices().size() < 3) {
             try {
                 throw new ObjWriterException("A polygon cannot have fewer than two vertices");
             } catch (ObjWriterException e) {
                 System.err.println(e.getMessage());
-                System.exit(0);
             }
         } else if (!polygon.getTextureVertexIndices().isEmpty() && polygon.getTextureVertexIndices().size() != polygon.getVertexIndices().size()) {
             try {
                 throw new ObjWriterException("The number of vertices and UV is not equivalent");
             } catch (ObjWriterException e) {
                 System.err.println(e.getMessage());
-                System.exit(0);
             }
         } else if (!polygon.getNormalIndices().isEmpty() && polygon.getNormalIndices().size() != polygon.getVertexIndices().size()) {
             try {
                 throw new ObjWriterException("The number of vertices and normals is not equivalent");
             } catch (ObjWriterException e) {
                 System.err.println(e.getMessage());
-                System.exit(0);
             }
         }
     }
